@@ -8,43 +8,85 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "card7"
+    @State var cpuCard = "card13"
+    
+    @State var playerScore = 0
+    @State var cpuScore = 0
+    
     var body: some View {
+        
         ZStack {
-                Image("background-cloth")
+                Image("background-plain")
+                .resizable()
+                .ignoresSafeArea()
             VStack {
+                Spacer()
                 Image("logo")
+                Spacer()
                 HStack{
                     Spacer()
-                    Image("card2")
+                    Image(playerCard)
                     Spacer()
-                    Image("card3")
+                    Image(cpuCard)
                     Spacer()
-                }.padding(.top, 20)
-                HStack {
+                }
+                Spacer()
+                
+                Button {
+                    deal()
+                } label: {
                     Image("button")
-                }.padding(.top, 50)
+                }
+
+                
+                Spacer()
                 HStack() {
                     Spacer()
                     VStack() {
                         Text("Player")
-                        Text("0")
+                            .font(.headline)
+                            .padding(.bottom, 10.0)
+                        Text(String(playerScore))
+                            .font(.largeTitle)
                     }
                     Spacer()
                     VStack() {
                         Text("CPU")
-                        Text("0")
+                            .font(.headline)
+                            .padding(.bottom, 10.0)
+                        Text(String(cpuScore))
+                            .font(.largeTitle)
+                            
                     }
                     Spacer()
                 }
-                .font(.title)
                 .foregroundColor(.white)
-                .padding(.top, 50)
+                Spacer()
             }
-            .padding(.top, 100)
-            .padding(.bottom,80)
             }
 
             }
+    
+    func deal() {
+        // Randomize the players card
+        let playerCardValue = Int.random(in: 2...14)
+        playerCard = "card" + String(playerCardValue);
+        
+        // Randomize the CPU card
+        let cpuCardValue = Int.random(in: 2...14)
+        cpuCard = "card" + String(cpuCardValue);
+        
+        //Update the score
+        if playerCardValue > cpuCardValue {
+            playerScore += 1
+        }
+        else if cpuCardValue > playerCardValue {
+            cpuScore += 1
+        }
+
+    }
         }
 
 #Preview {
